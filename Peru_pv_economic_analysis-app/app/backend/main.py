@@ -1,12 +1,21 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+import os
 
 from backend_step_by_step import run_simulation
 from models import EconomicParameters, FinancialParameters, Results, TechnicalParameters
 
 app = FastAPI()
-app.mount("/", StaticFiles(directory="static", html=True), name='static')
+# Servir les fichiers statiques React
+app.mount("/static", StaticFiles(directory="static/build/static"), name="static")
+
+# Route catch-all pour React Router
+@app.get("/{full_path:path}")
+async def serve_react_app(full_path: str):
+    index_path = os.path.join("static", "build", "index.html")
+    return FileResponse(index_path)
 
 @app.get("/tests")
 def hello_world():
