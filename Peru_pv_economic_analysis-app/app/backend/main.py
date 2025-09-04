@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from backend_step_by_step import run_simulation
 from models import EconomicParameters, FinancialParameters, Results, TechnicalParameters
 
 app = FastAPI()
+app.mount("/", StaticFiles(directory="static", html=True), name='static')
 
 @app.get("/")
 def hello_world():
