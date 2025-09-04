@@ -8,7 +8,7 @@ from models import EconomicParameters, FinancialParameters, Results, TechnicalPa
 app = FastAPI()
 app.mount("/", StaticFiles(directory="static", html=True), name='static')
 
-@app.get("/")
+@app.get("/tests")
 def hello_world():
     return {"message : Hello World"}
 
